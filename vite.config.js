@@ -6,11 +6,18 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
+      strategies: 'injectManifest',
+      srcDir: 'src',
+      filename: 'utils/service-worker.js',
       registerType: "autoUpdate",
       injectRegister: "auto",
       workbox: {
         navigateFallback: "/index.html",
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,json}']
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,json}'],
+      },
+      devOptions: {
+        enabled: true,
+        type: "module",
       },
       manifest: {
         name: "Tricount",
