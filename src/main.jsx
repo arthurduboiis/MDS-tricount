@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import Home from './pages/Home.jsx'
 import NewTricount from './pages/NewTricount.jsx'
+import Tricount from './pages/Tricount.jsx'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "/new-tricount",
     element: <NewTricount />,
+  },
+  {
+    path: "/tricount",
+    element: <Tricount />,
   }
 ]);
 

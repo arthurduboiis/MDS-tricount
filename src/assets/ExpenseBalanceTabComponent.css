@@ -1,0 +1,17 @@
+.slider {
+    position: absolute;
+    bottom: 0;
+    height: 4px;
+    background: #FFD700;
+    transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
+  }
+  
+  .slider.expenses {
+    left: 0;
+    width: 50%; /* adjust this value based on the width of your tabs */
+  }
+  
+  .slider.balance {
+    left: 50%; /* adjust this value based on the width of your tabs */
+    width: 50%; /* adjust this value based on the width of your tabs */
+  }

@@ -34,7 +34,7 @@ const NewTricount = () => {
     }
 
     return (
-        <div className='flex flex-col gap-4'>
+        <div className='flex flex-col gap-4 h-screen'>
             <div className='text-white relative top-0 bg-slate-800 flex justify-between items-center w-full h-16 py -4'>
                 <button onClick={goBack} className='p-2 bg-transparent cursor-pointer'>
                     Annuler
