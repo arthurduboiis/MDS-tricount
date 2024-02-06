@@ -2,6 +2,7 @@ import React from "react";
 import NavBarComponent from "../components/NavBarComponent";
 import TricountListComponent from "../components/tricountListComponent";
 import { useNavigate } from "react-router";
+import * as PusherPushNotifications from "@pusher/push-notifications-web";
 
 const Home = () => {
   const tricounts = [
@@ -26,6 +27,16 @@ const Home = () => {
   const goToNewTricount = () => {
       navigate('/new-tricount');
   }
+
+  const beamsClient = new PusherPushNotifications.Client({
+    instanceId: '8dc0f2ef-508d-41cb-8402-e4758cdbe4a6',
+  });
+
+  beamsClient.start()
+    .then(() => beamsClient.addDeviceInterest('hello'))
+    .then(() => console.log('Successfully registered and subscribed!'))
+    .catch(console.error);
+
   return (
       <div className='w-full flex flex-col bg-zinc-900'>
         <NavBarComponent />
