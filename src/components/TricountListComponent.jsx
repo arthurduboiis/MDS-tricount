@@ -1,8 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router";
 
 const TricountListComponent = ({ tricount }) => {
-  const detail = () => {
-    console.log("detail");
+  const navigate = useNavigate();
+  const goToSpecifyTricount = () => {
+    navigate("/tricount");
   };
 
   return (
@@ -12,14 +14,14 @@ const TricountListComponent = ({ tricount }) => {
         <div className="text-xl italic pb-4">{tricount.description}</div>
       </div>
       <div className="flex">
-          {tricount.notifications > 0 && (
-            <div>
-              <div className="w-9 h-9 border rounded-full bg-blue-400">
-                {tricount.notifications}
-              </div>
+        {tricount.notifications > 0 && (
+          <div>
+            <div className="w-9 h-9 border rounded-full bg-blue-400">
+              {tricount.notifications}
             </div>
-          )}
-        <div onClick={detail} className="size-10 cursor-pointer">
+          </div>
+        )}
+        <div onClick={goToSpecifyTricount} className="size-10 cursor-pointer">
           <img src="/flecheDroite.png" />
         </div>
       </div>

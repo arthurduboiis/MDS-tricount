@@ -2,7 +2,6 @@ import React from "react";
 import NavBarComponent from "../components/NavBarComponent";
 import TricountListComponent from "../components/tricountListComponent";
 import { useNavigate } from "react-router";
-import ExpenseListComponent from "../components/ExpenseListComponent";
 
 const Home = () => {
   const tricounts = [
