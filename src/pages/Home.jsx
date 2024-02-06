@@ -22,27 +22,6 @@ const Home = () => {
       notifications: 0,
     },
   ];
-
-  const expenses = [
-    {
-      title: "Course",
-      paid: "Baptiste",
-      amount: 20,
-      date: "12/12/2021",
-    },
-    {
-      title: "Airbnb",
-      paid: "Baptiste",
-      amount: 250,
-      date: "12/12/2021",
-    },
-    {
-      title: "Pizza",
-      paid: "Baptiste",
-      amount: 35,
-      date: "12/12/2021",
-    },
-  ];
   const navigate = useNavigate();
 
   const goToNewTricount = () => {
@@ -53,18 +32,7 @@ const Home = () => {
       <NavBarComponent />
       <div className="divide-y-2 divide-blue-300">
         {tricounts.map((tricount, index) => (
-          <TricountListComponent
-            key={index}
-            tricount={tricount}
-          />
-        ))}
-      </div>
-      <div className="divide-y-2 divide-blue-300">
-        {expenses.map((expense, index) => (
-          <ExpenseListComponent
-            key={index}
-            expense={expense}
-          />
+          <TricountListComponent key={index} tricount={tricount} />
         ))}
       </div>
       <div
