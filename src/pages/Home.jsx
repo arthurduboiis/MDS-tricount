@@ -27,7 +27,7 @@ const Home = () => {
     navigate("/new-tricount");
   };
   return (
-    <div className="w-full">
+    <div className="w-full flex flex-col">
       <NavBarComponent />
       <div className="divide-y-2 divide-blue-300">
         {tricounts.map((tricount, index) => (
