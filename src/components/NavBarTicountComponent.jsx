@@ -1,10 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router";
 
 const NavBarTicountComponent = ({ name, users }) => {
+  const navigate = useNavigate();
   return (
     <nav className="bg-slate-800 flex justify-between items-center relative top-0 w-full h-16 py-4">
       <img
-        className="h-10"
+        onClick={() => navigate("/")}
+        className="h-10 cursor-pointer"
         src="/left_arrow_white.png"
       />
       <div className="flex flex-col justify-start items-start">
