@@ -7,7 +7,7 @@ const NavBarTicountComponent = ({ name, users }) => {
     <nav className="bg-slate-800 flex justify-between items-center relative top-0 w-full h-16 py-4">
       <img
         onClick={() => navigate("/")}
-        className="h-10"
+        className="h-10 cursor-pointer"
         src="/left_arrow_white.png"
       />
       <div className="flex flex-col justify-start items-start">

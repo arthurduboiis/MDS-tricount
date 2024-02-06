@@ -8,7 +8,10 @@ const TricountListComponent = ({ tricount }) => {
   };
 
   return (
-    <div className="flex justify-between items-center text-2xl font-sans">
+    <div
+      onClick={goToSpecifyTricount}
+      className="hover:bg-slate-500 flex justify-between items-center text-2xl font-sans cursor-pointer"
+    >
       <div className="flex flex-col items-start justify-between pt-2 pl-4">
         <strong>{tricount.title}</strong>
         <div className="text-xl italic pb-4">{tricount.description}</div>
@@ -21,8 +24,8 @@ const TricountListComponent = ({ tricount }) => {
             </div>
           </div>
         )}
-        <div onClick={goToSpecifyTricount} className="size-10 cursor-pointer">
-          <img src="/flecheDroite.png" />
+        <div className="size-10">
+          <img src="/flecheDroite.png" style={{ filter: "invert(100%)" }} />
         </div>
       </div>
     </div>
