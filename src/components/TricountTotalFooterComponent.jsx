@@ -1,8 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router";
 
 const TricountTotalFooterComponent = () => {
+    const navigate = useNavigate();
+
     const goToNewExpense = () => {
-        console.log("go to new expense");
+        navigate("/new-expense");
     };
 
   return (

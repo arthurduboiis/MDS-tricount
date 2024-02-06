@@ -4,6 +4,8 @@ import './index.css'
 import Home from './pages/Home.jsx'
 import NewTricount from './pages/NewTricount.jsx'
 import Tricount from './pages/Tricount.jsx'
+import NewExpense from './pages/NewExpense.jsx'
+import PageNotFound from './pages/PageNotFound.jsx'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -23,7 +25,16 @@ const router = createBrowserRouter([
   {
     path: "/tricount",
     element: <Tricount />,
-  }
+  },
+  {
+    path: "new-expense",
+    element: <NewExpense />,
+  },
+  {
+    path: "*",
+    element: <PageNotFound />,
+  },
+  
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

@@ -10,7 +10,7 @@ const Tricount = () => {
   };
 
   return (
-    <div className="w-full h-screen flex flex-col justify-between">
+    <div className="w-full h-screen flex flex-col justify-between bg-zinc-900">
       <div className="">
         {" "}
         <NavBarTicountComponent name={tricount.name} users={tricount.users} />
