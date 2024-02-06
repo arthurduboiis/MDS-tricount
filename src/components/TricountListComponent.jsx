@@ -1,6 +1,6 @@
 import React from "react";
 
-const TricountListComponent = (tricount) => {
+const TricountListComponent = ({ tricount }) => {
   const detail = () => {
     console.log("detail");
   };
