@@ -12,9 +12,6 @@ export default defineConfig({
         navigateFallback: "/index.html",
         globPatterns: ['**/*.{js,css,html,ico,png,svg,json}']
       },
-      devOptions: {
-        enabled: true,
-      },
       manifest: {
         name: "Tricount",
         description: "Tricount",
