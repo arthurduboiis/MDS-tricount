@@ -3,25 +3,12 @@ import NavBarComponent from "../components/NavBarComponent";
 import TricountListComponent from "../components/tricountListComponent";
 import { useNavigate } from "react-router";
 import * as PusherPushNotifications from "@pusher/push-notifications-web";
+import { useLiveQuery } from "dexie-react-hooks";
+import { db } from "../utils/db.js";
 
 const Home = () => {
-  const tricounts = [
-    {
-      title: "Lyon",
-      description: "ça coûte chère zebi",
-      notifications: 2,
-    },
-    {
-      title: "Voyage",
-      description: "les vacances, c'est bien",
-      notifications: 2,
-    },
-    {
-      title: "Autre exemple",
-      description: "la description de l'exemple",
-      notifications: 0,
-    },
-  ];
+  const tricounts = useLiveQuery(() => db.tricount.toArray());
+  console.log(tricounts);
   const navigate = useNavigate();
 
   const goToNewTricount = () => {
@@ -48,7 +35,7 @@ const Home = () => {
     <div className="w-full flex flex-col bg-zinc-900">
       <NavBarComponent />
       <div className="divide-y-2 divide-blue-300">
-        {tricounts.map((tricount, index) => (
+        {tricounts?.map((tricount, index) => (
           <TricountListComponent key={index} tricount={tricount} />
         ))}
       </div>

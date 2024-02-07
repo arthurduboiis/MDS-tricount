@@ -8,12 +8,12 @@ export default defineConfig({
     VitePWA({
       strategies: 'injectManifest',
       srcDir: 'src',
-      filename: 'utils/service-worker.js',
+      filename: 'service-worker.js',
       registerType: "autoUpdate",
       injectRegister: "auto",
       workbox: {
         navigateFallback: "/index.html",
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,json}'],
+        globPatterns: ['**/*.{js,jsx,css,html,ico,png,svg,json}'],
       },
       devOptions: {
         enabled: true,
