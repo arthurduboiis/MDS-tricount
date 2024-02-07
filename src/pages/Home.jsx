@@ -4,7 +4,7 @@ import TricountListComponent from "../components/tricountListComponent";
 import { useNavigate } from "react-router";
 import * as PusherPushNotifications from "@pusher/push-notifications-web";
 import { useLiveQuery } from "dexie-react-hooks";
-import { db } from "../utils/db.js";
+import { db, dbRemote, sync } from "../utils/db.js";
 
 const Home = () => {
   const tricounts = useLiveQuery(() => db.tricount.toArray());
@@ -13,6 +13,8 @@ const Home = () => {
   const goToNewTricount = () => {
     navigate("/new-tricount");
   };
+
+
 
   React.useEffect(() => {
     window.navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
