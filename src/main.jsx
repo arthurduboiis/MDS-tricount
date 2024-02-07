@@ -23,11 +23,11 @@ const router = createBrowserRouter([
     element: <NewTricount />,
   },
   {
-    path: "/tricount",
+    path: "/tricount/:id",
     element: <Tricount />,
   },
   {
-    path: "new-expense",
+    path: "/:id/new-expense",
     element: <NewExpense />,
   },
   {

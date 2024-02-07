@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router";
-import { db } from "../utils/db.js";
+import { db, sync } from "../utils/db.js";
 
 const NewTricount = () => {
   const [title, setTitle] = React.useState("");
@@ -9,6 +9,7 @@ const NewTricount = () => {
   const [newParticipant, setNewParticipant] = React.useState("");
   const [status, setStatus] = React.useState("");
   const navigate = useNavigate();
+  
 
   const goBack = () => {
     navigate("/");
@@ -42,10 +43,13 @@ const NewTricount = () => {
         title,
         description,
         participants: participant,
+        expenses: [],
       };
       console.log(newTricount);
       await db.tricount.add(newTricount);
       setStatus("Tricount added successfully!");
+      sync();
+      navigate("/");
     } catch (error) {
       setStatus(`Error adding tricount : ${error}`);
     }

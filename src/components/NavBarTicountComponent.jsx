@@ -13,8 +13,8 @@ const NavBarTicountComponent = ({ name, users }) => {
       <div className="flex flex-col justify-start items-start">
         <span className="text-white font-bold">{name}</span>
         <div className="flex gap-2 text-sm">
-          {users.map((user, index) => (
-            <span>
+          {users?.map((user, index) => (
+            <span key={index}>
               {user} {index !== users.length - 1 && ","}{" "}
             </span>
           ))}
