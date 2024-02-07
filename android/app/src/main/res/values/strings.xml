@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">tricount</string>
+    <string name="title_activity_main">tricount</string>
+    <string name="package_name">com.tricount.app</string>
+    <string name="custom_url_scheme">com.tricount.app</string>
+</resources>
