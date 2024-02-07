@@ -8,7 +8,6 @@ import { db } from "../utils/db.js";
 
 const Home = () => {
   const tricounts = useLiveQuery(() => db.tricount.toArray());
-  console.log(tricounts);
   const navigate = useNavigate();
 
   const goToNewTricount = () => {

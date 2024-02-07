@@ -1,22 +1,29 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
 import "../assets/newExpense.css";
+import { db } from "../utils/db.js";
+import { useLiveQuery } from "dexie-react-hooks";
+import { useParams } from "react-router-dom";
 
 const NewExpense = () => {
+  const { id } = useParams();
+  const [status, setStatus] = React.useState("");
   const [title, setTitle] = React.useState("");
   const [amount, setAmount] = React.useState(0);
-  const [paidForUsers, setPaidForUsers] = React.useState([
-    {
-      id: 1,
-      name: "Arthur",
-      isChecked: false,
-    },
-    {
-      id: 2,
-      name: "Baptiste",
-      isChecked: false,
-    },
-  ]);
+  const tricounts = useLiveQuery(() => db.tricount.toArray());
+  const usersTricount = tricounts?.find(
+    (tricount) => tricount.id === parseInt(id)
+  ).participants;
+
+  const [paidForUsers, setPaidForUsers] = React.useState([]);
+  React.useEffect(() => {
+    setPaidForUsers(
+      usersTricount?.map((user, index) => {
+        return { id: index + 1, name: user, isChecked: false };
+      })
+    );
+  }, [usersTricount]);
+
   const [paidByUser, setPaidByUser] = React.useState("");
   const [date, setDate] = React.useState("");
   const [isAllChecked, setIsAllChecked] = React.useState(false);
@@ -47,14 +54,28 @@ const NewExpense = () => {
     );
   };
 
+  const addExpense = async () => {
+    try {
+      const newExpense = {
+        title,
+        amount,
+        date,
+        paidByUser,
+        paidForUsers: paidForUsers.filter((user) => user.isChecked),
+      };
+      console.log(newExpense);
+      await db.expense.add(newExpense);
+      setStatus("Expense added successfully!");
+    } catch (error) {
+      setStatus(`Error adding expense : ${error}`);
+    }
+  };
+
   useEffect(() => {
-    setIsAllChecked(paidForUsers.every((user) => user.isChecked));
+    setIsAllChecked(paidForUsers?.every((user) => user.isChecked));
   }, [paidForUsers]);
   const goBack = () => {
     navigate("/tricount");
-  };
-  const addExpense = () => {
-    console.log("add Expense");
   };
 
   return (
@@ -117,8 +138,8 @@ const NewExpense = () => {
             <option disabled value="">
               Choisir un utilisateur
             </option>
-            {paidForUsers.map((user, index) => (
-              <option key={index} value={user.id}>
+            {paidForUsers?.map((user, index) => (
+              <option key={index} value={user.name}>
                 {user.name}
               </option>
             ))}
@@ -137,7 +158,7 @@ const NewExpense = () => {
       </div>
 
       <div className="flex flex-col  w-full px-4 gap-4">
-        {paidForUsers.map((user) => (
+        {paidForUsers?.map((user) => (
           <div
             key={user.id}
             className="flex items-center justify-between border-b-2 border-slate-500 py-2"

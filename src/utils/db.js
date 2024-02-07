@@ -1,7 +1,7 @@
 import Dexie from "dexie";
 
 export const db = new Dexie("tricountDB");
-db.version(1).stores({
+db.version(2).stores({
   tricount: "++id, title, amount",
   user: "++id, name",
   expense: "++id, name, amount, tricountId",
