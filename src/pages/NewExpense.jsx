@@ -111,6 +111,11 @@ const NewExpense = () => {
     });
   };
 
+  const getCheckedUserCount = () => {
+    const checkedUsers = paidForUsers?.filter((user) => user.isChecked);
+    return checkedUsers.length;
+  };
+
   React.useEffect(() => {
     setIsAllChecked(paidForUsers?.every((user) => user.isChecked));
   }, [paidForUsers]);
@@ -215,7 +220,10 @@ const NewExpense = () => {
               />
               <label>{user.name}</label>
             </div>
-            <div className="">0.00 EUR</div>
+            { user.isChecked ?  <div className="">{getCheckedUserCount() > 0 ? amount /getCheckedUserCount() : 0.00 } EUR</div> :
+            <div className="text-slate-600">0.00 EUR</div>}
+           
+         
           </div>
         ))}
         <ToastContainer />
