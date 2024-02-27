@@ -1,6 +1,6 @@
 import React from "react";
 import NavBarComponent from "../components/NavBarComponent";
-import TricountListComponent from "../components/tricountListComponent";
+import TricountListComponent from "../components/TricountListComponent";
 import { useNavigate } from "react-router";
 import * as PusherPushNotifications from "@pusher/push-notifications-web";
 import { useLiveQuery } from "dexie-react-hooks";
