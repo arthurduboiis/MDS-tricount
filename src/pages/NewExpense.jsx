@@ -222,8 +222,6 @@ const NewExpense = () => {
             </div>
             { user.isChecked ?  <div className="">{getCheckedUserCount() > 0 ? amount /getCheckedUserCount() : 0.00 } EUR</div> :
             <div className="text-slate-600">0.00 EUR</div>}
-           
-         
           </div>
         ))}
         <ToastContainer />
