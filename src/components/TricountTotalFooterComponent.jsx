@@ -12,18 +12,16 @@ const TricountTotalFooterComponent = ({tricountId, expenses, currentUser}) => {
 
     React.useEffect(() => {
         if (expenses) {
-            const total = expenses.reduce((acc, expense) => acc + expense.amount, 0);
+            const total = expenses.reduce((acc, expense) => parseFloat(acc) + parseFloat(expense.amount), 0);
             setTotal(Number(total));
         }
     }, [expenses]);
 
     React.useEffect(() => { 
         if (currentUser && expenses) {
-          console.log(expenses);
-          console.log(currentUser);
             const paidByTotal = expenses?.reduce((acc, expense) => {
                 if (expense.paidByUser === currentUser) {
-                    return acc + expense.amount;
+                    return parseFloat(acc) + parseFloat(expense.amount);
                 } else {
                     return acc;
                 }

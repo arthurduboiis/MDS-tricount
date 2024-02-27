@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router";
-import { db, sync } from "../utils/db.js";
+import { db } from "../utils/db.js";
 
 const NewTricount = () => {
   const [title, setTitle] = React.useState("");
@@ -48,7 +48,6 @@ const NewTricount = () => {
       console.log(newTricount);
       await db.tricount.add(newTricount);
       setStatus("Tricount added successfully!");
-      sync();
       navigate("/");
     } catch (error) {
       setStatus(`Error adding tricount : ${error}`);

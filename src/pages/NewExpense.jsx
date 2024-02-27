@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
 import "../assets/newExpense.css";
-import { db, sync } from "../utils/db.js";
+import { db } from "../utils/db.js";
 import { ToastContainer, toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
@@ -91,7 +91,6 @@ const NewExpense = () => {
       await db.tricount.update(parseInt(id), {
         expenses: [...tricount.expenses, newExpense],
       });
-      sync();
       setStatus("Expense added successfully!");
       navigate(`/tricount/${id}`);
     } catch (error) {

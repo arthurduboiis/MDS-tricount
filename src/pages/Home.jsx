@@ -4,7 +4,7 @@ import TricountListComponent from "../components/TricountListComponent";
 import { useNavigate } from "react-router";
 import * as PusherPushNotifications from "@pusher/push-notifications-web";
 import { useLiveQuery } from "dexie-react-hooks";
-import { db, dbRemote, sync } from "../utils/db.js";
+import { db } from "../utils/db.js";
 
 const Home = () => {
   const tricounts = useLiveQuery(() => db.tricount.toArray());
