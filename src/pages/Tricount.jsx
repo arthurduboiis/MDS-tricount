@@ -50,7 +50,7 @@ const Tricount = () => {
         {effectiveTab === "expenses" && (
           <div className="divide-y-2 divide-blue-300">
             {expenses?.map((expense, index) => (
-              <ExpenseListComponent key={index} expense={expense} />
+              <ExpenseListComponent key={index} expense={expense} tricount_id={tricount._id} />
             ))}
           </div>
         )}
