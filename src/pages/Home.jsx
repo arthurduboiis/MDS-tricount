@@ -3,8 +3,9 @@ import NavBarComponent from "../components/NavBarComponent";
 import TricountListComponent from "../components/TricountListComponent";
 import { useNavigate } from "react-router";
 import * as PusherPushNotifications from "@pusher/push-notifications-web";
-import { useLiveQuery } from "dexie-react-hooks";
+import add from "../assets/add.png"; 
 import { db, sync, remoteCouch } from "../utils/db.js";
+
 
 const Home = () => {
   const [tricounts, setTricounts] = React.useState({});
@@ -15,18 +16,19 @@ const Home = () => {
   };
 
   React.useEffect(() => {
-    db.allDocs({include_docs: true, descending: true}).then((result) => {
-      setTricounts(result.rows.map((row) => row.doc));
-
-    }).catch((err) => {
-      console.log(err);
-    });
+    db.allDocs({ include_docs: true, descending: true })
+      .then((result) => {
+        setTricounts(result.rows.map((row) => row.doc));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   React.useEffect(() => {
-    if(remoteCouch) {
+    if (remoteCouch) {
       sync();
-      if(!tricounts) window.location.reload();
+      if (!tricounts) window.location.reload();
     }
   }, []);
 
@@ -50,22 +52,17 @@ const Home = () => {
     <div className="w-full flex flex-col bg-zinc-900">
       <NavBarComponent />
       <div className="divide-y-2 divide-blue-300">
-        { tricounts.length > 0 && tricounts.map((tricount, index) => (
-          <TricountListComponent key={index} tricount={tricount} />
-        ))}
-      </div>
-      <div
-        className="flex justify-center items-center absolute bottom-2 right-2 h-14 w-14 cursor-pointer"
-        onClick={goToNewTricount}
-      >
-        <img src="/add.png" alt="add button" />
+        {tricounts.length > 0 &&
+          tricounts.map((tricount, index) => (
+            <TricountListComponent key={index} tricount={tricount} />
+          ))}
       </div>
 
       <div
         className="flex justify-center items-center absolute bottom-2 right-2 h-14 w-14 cursor-pointer"
         onClick={goToNewTricount}
       >
-        <img src="/add.png" alt="add button" />
+        <img src={add} alt="add button" />
       </div>
     </div>
   );

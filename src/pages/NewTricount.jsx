@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import { db } from "../utils/db.js";
+import trash from "../assets/trash.png";
 
 const NewTricount = () => {
   const [title, setTitle] = React.useState("");
@@ -103,7 +104,7 @@ const NewTricount = () => {
               onClick={(e) => deleteUser(e, index)}
             >
               <img
-                src="/trash.png"
+                src={trash}
                 alt="delete"
                 className="w-[25px] h-[25px]"
               />

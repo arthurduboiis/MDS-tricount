@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
+import left_arrow_white from "../assets/left_arrow_white.png";
+import notif from "../assets/notif.png";
 
 const NavBarTicountComponent = ({ name, users }) => {
   const navigate = useNavigate();
@@ -8,7 +10,7 @@ const NavBarTicountComponent = ({ name, users }) => {
       <img
         onClick={() => navigate("/")}
         className="h-10 cursor-pointer"
-        src="/left_arrow_white.png"
+        src={left_arrow_white}
       />
       <div className="flex flex-col justify-start items-start">
         <span className="text-white font-bold">{name}</span>
@@ -21,7 +23,7 @@ const NavBarTicountComponent = ({ name, users }) => {
         </div>
       </div>
       <div className="flex gap-8 items-center pr-4">
-        <img className="h-10" src="/notif.png" />
+        <img className="h-10" src={notif} />
         <div className="flex flex-col space-y-1 pr-2 cursor-pointer">
           <div className="h-2 w-2 border rounded-full bg-white"></div>
           <div className="h-2 w-2 border rounded-full bg-white"></div>
