@@ -17,6 +17,10 @@ export default defineConfig({
       workbox: {
         navigateFallback: "/index.html",
       },
+      devOptions: {
+        enabled: true,
+        type: "module",
+      },
       manifest: {
         name: "Tricount",
         description: "Tricount",

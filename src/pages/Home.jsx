@@ -36,6 +36,7 @@ const Home = () => {
   }, []);
 
   React.useEffect(() => {
+    console.log("register")
     window.navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
       const beamsClient = new PusherPushNotifications.Client({
         instanceId: "8dc0f2ef-508d-41cb-8402-e4758cdbe4a6",
@@ -43,7 +44,9 @@ const Home = () => {
       });
       beamsClient
         .start()
-        .then(() => beamsClient.addDeviceInterest("debug-test"))
+        .then(() => beamsClient.getDeviceId())
+        .then((deviceId) => console.log("Successfully registered with Beams. Device ID:", deviceId))
+        .then(() => beamsClient.addDeviceInterest("hello"))
         .then(() => console.log("Successfully registered and subscribed!"))
         .then(() => beamsClient.getDeviceInterests())
         .then((interests) => console.log("Current interests:", interests))
