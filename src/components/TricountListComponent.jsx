@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router";
+import flecheDroite from "../assets/flecheDroite.png";
 
 const TricountListComponent = ({ tricount }) => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const TricountListComponent = ({ tricount }) => {
           </div>
         )}
         <div className="size-10">
-          <img src="/flecheDroite.png" style={{ filter: "invert(100%)" }} />
+          <img src={flecheDroite} style={{ filter: "invert(100%)" }} />
         </div>
       </div>
     </div>

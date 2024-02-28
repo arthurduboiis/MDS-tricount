@@ -11,13 +11,11 @@ export default defineConfig({
       filename: 'service-worker.js',
       registerType: "autoUpdate",
       injectRegister: "auto",
+      injectManifest: {
+        globPatterns: ['**/*.{js,jsx,css,html,ico,png,svg,json}', '**/*.{png,svg}'],
+      },
       workbox: {
         navigateFallback: "/index.html",
-        globPatterns: ['**/*.{js,jsx,css,html,ico,png,svg,json}'],
-      },
-      devOptions: {
-        enabled: true,
-        type: "module",
       },
       manifest: {
         name: "Tricount",

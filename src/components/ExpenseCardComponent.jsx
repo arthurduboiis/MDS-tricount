@@ -1,4 +1,5 @@
 import React from "react";
+import flecheGauche from "../assets/flecheGauche.png";
 
 const ExpenseCardComponent = ({ expense}) => {
 
@@ -14,7 +15,7 @@ const ExpenseCardComponent = ({ expense}) => {
     <div className="flex flex-col text-2xl font-sans">
       <div className="bg-blue-800 flex justify-between p-4 items-center w-full text-xl">
         <div onClick={back} className="cursor-pointer size-12">
-            <img src="/public/flecheGauche.png"/>
+            <img src={flecheGauche}/>
         </div>
         <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-full" onClick={onEdit}>
           Modifier

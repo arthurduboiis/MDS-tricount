@@ -5,7 +5,7 @@ export const db = new PouchDB("tricountDB");
 
 export const remoteCouch = new PouchDB("http://207.154.213.42:5984/tricountDB");
 
-function sync() {
+export const sync = () => {
   var opts = { live: true };
-  db.sync(remoteCouch, opts, syncError);
+  db.sync(remoteCouch, opts);
 }

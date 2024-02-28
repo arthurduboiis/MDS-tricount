@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router";
+import add from "../assets/add.png";
 
 const TricountTotalFooterComponent = ({tricountId, expenses, currentUser}) => {
     const navigate = useNavigate();
@@ -42,7 +43,7 @@ const TricountTotalFooterComponent = ({tricountId, expenses, currentUser}) => {
         className="flex justify-center items-center self-start -my-8 justify-self-start h-14 w-14 cursor-pointer"
         onClick={goToNewExpense}
       >
-        <img src="/add.png" alt="add button" />
+        <img src={add} alt="add button" />
       </div>
       <div className="flex flex-col items-end p-2">
         <span className="uppercase text-slate-400">Total dépenses</span>

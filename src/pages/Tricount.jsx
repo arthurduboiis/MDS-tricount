@@ -3,7 +3,6 @@ import NavBarTicountComponent from "../components/NavBarTicountComponent";
 import ExpenseBalanceTabComponent from "../components/ExpenseBalanceTabComponent";
 import TricountTotalFooterComponent from "../components/TricountTotalFooterComponent";
 import ExpenseListComponent from "../components/ExpenseListComponent";
-import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "../utils/db.js";
 import { useParams } from "react-router-dom";
 
