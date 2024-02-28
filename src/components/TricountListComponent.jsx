@@ -10,7 +10,7 @@ const TricountListComponent = ({ tricount }) => {
 
   return (
     <div
-      onClick={(e) => goToSpecifyTricount(e,tricount.id)}
+      onClick={(e) => goToSpecifyTricount(e,tricount._id)}
       className="hover:bg-slate-500 flex justify-between items-center text-2xl font-sans cursor-pointer"
     >
       <div className="flex flex-col items-start justify-between pt-2 pl-4">

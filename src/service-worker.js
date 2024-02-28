@@ -1,11 +1,6 @@
-import { precacheAndRoute } from 'workbox-precaching'
-import { db, sync } from "./utils/db.js";
+import { precacheAndRoute } from "workbox-precaching";
 
 
-precacheAndRoute(self.__WB_MANIFEST)
+precacheAndRoute(self.__WB_MANIFEST);
 
-import './pusher';
-
-self.addEventListener('online', () => {
-  sync();
-});
+import "./pusher";

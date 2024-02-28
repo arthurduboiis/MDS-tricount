@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
 import "../assets/newExpense.css";
-import { db, sync } from "../utils/db.js";
+import { db } from "../utils/db.js";
 import { ToastContainer, toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
@@ -22,12 +22,16 @@ const NewExpense = () => {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const tricountData = await db.tricount.toArray();
-      const tricount = tricountData?.find(
-        (tricount) => tricount.id === parseInt(id)
-      );
-
-      setTricount(tricount);
+      await db
+        .allDocs({ include_docs: true, descending: true })
+        .then((result) => {
+          result.rows.map((row) => {
+            row.doc._id === id ? setTricount(row.doc) : null;
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
 
     fetchData();
@@ -35,7 +39,6 @@ const NewExpense = () => {
 
   React.useEffect(() => {
     if (tricount) {
-      console.log(tricount.participants);
       setUsersTricount(tricount.participants);
     }
   }, [tricount]);
@@ -73,26 +76,40 @@ const NewExpense = () => {
   };
 
   const addExpense = async () => {
-
-    if (title === "" || amount === 0 || paidByUser === "" || date === "" || paidForUsers.length === 0) {
+    if (
+      title === "" ||
+      amount === 0 ||
+      paidByUser === "" ||
+      date === "" ||
+      paidForUsers.length === 0
+    ) {
       setStatus("Veuillez remplir tous les champs");
-     
+
       return;
     }
 
     try {
       const newExpense = {
-        title,
-        amount,
-        date,
-        paidByUser,
+        _id: new Date().toISOString(),
+        title: title,
+        amount: amount,
+        date: date,
+        paidByUser: paidByUser,
         paidForUsers: paidForUsers.filter((user) => user.isChecked),
       };
-      await db.tricount.update(parseInt(id), {
-        expenses: [...tricount.expenses, newExpense],
-      });
-      sync();
+      tricount.expenses.push(newExpense);
+
+      await db
+        .put(tricount)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
       setStatus("Expense added successfully!");
+      console.log(id);
       navigate(`/tricount/${id}`);
     } catch (error) {
       setStatus(`Error adding expense : ${error}`);
@@ -103,11 +120,10 @@ const NewExpense = () => {
     console.log(message);
     console.log("toast");
     toast.error(message, {
-      autoClose: 5000, 
-      onClose: () => setStatus(""), 
+      autoClose: 5000,
+      onClose: () => setStatus(""),
       closeButton: true,
       draggable: true,
-     
     });
   };
 
@@ -126,7 +142,6 @@ const NewExpense = () => {
 
   return (
     <div className="flex flex-col gap-4 h-screen bg-zinc-900">
-      
       {status && notifyAndResetStatus(status)}
       <div className="text-white relative top-0 bg-slate-800 flex justify-between items-center w-full h-16 py -4">
         <button onClick={goBack} className="p-2 bg-transparent cursor-pointer">
@@ -184,7 +199,9 @@ const NewExpense = () => {
             }}
             className="w-full border-b-2  bg-zinc-900 focus:border-b-2 focus:border-y-indigo-600 focus:outline-none  text-white"
           >
-            <option disabled value={""}>Choisir un utilisateur</option>
+            <option disabled value={""}>
+              Choisir un utilisateur
+            </option>
             {paidForUsers?.map((user, index) => (
               <option key={index} value={user.name || ""}>
                 {user.name}
@@ -220,8 +237,16 @@ const NewExpense = () => {
               />
               <label>{user.name}</label>
             </div>
-            { user.isChecked ?  <div className="">{getCheckedUserCount() > 0 ? amount /getCheckedUserCount() : 0.00 } EUR</div> :
-            <div className="text-slate-600">0.00 EUR</div>}
+            {user.isChecked ? (
+              <div className="">
+                {getCheckedUserCount() > 0
+                  ? amount / getCheckedUserCount()
+                  : 0.0}{" "}
+                EUR
+              </div>
+            ) : (
+              <div className="text-slate-600">0.00 EUR</div>
+            )}
           </div>
         ))}
         <ToastContainer />
