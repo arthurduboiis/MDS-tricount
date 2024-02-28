@@ -14,8 +14,7 @@ const Home = () => {
   const goToNewTricount = () => {
     navigate("/new-tricount");
   };
-
-  React.useEffect(() => {
+  const fetchtricounts = async () => {
     db.allDocs({ include_docs: true, descending: true })
       .then((result) => {
         setTricounts(result.rows.map((row) => row.doc));
@@ -23,12 +22,16 @@ const Home = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  React.useEffect(() => {
+    fetchtricounts();
   }, []);
 
   React.useEffect(() => {
     if (remoteCouch) {
       sync();
-      if (!tricounts) window.location.reload();
+      fetchtricounts();
     }
   }, []);
 
