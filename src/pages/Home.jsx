@@ -4,7 +4,7 @@ import TricountListComponent from "../components/TricountListComponent";
 import { useNavigate } from "react-router";
 import * as PusherPushNotifications from "@pusher/push-notifications-web";
 import { useLiveQuery } from "dexie-react-hooks";
-import { db } from "../utils/db.js";
+import { db, sync, remoteCouch } from "../utils/db.js";
 
 const Home = () => {
   const [tricounts, setTricounts] = React.useState({});
@@ -21,9 +21,13 @@ const Home = () => {
     }).catch((err) => {
       console.log(err);
     });
-    
-    
+  }, []);
 
+  React.useEffect(() => {
+    if(remoteCouch) {
+      sync();
+      if(!tricounts) window.location.reload();
+    }
   }, []);
 
   React.useEffect(() => {
