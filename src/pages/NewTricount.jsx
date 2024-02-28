@@ -40,13 +40,17 @@ const NewTricount = () => {
   const addTricount = async () => {
     try {
       const newTricount = {
-        title,
-        description,
+        _id: new Date().toISOString(),
+        title: title,
+        description: description,
         participants: participant,
         expenses: [],
       };
-      console.log(newTricount);
-      await db.tricount.add(newTricount);
+      await db.put(newTricount).then((response) => {
+        console.log(response);
+      }).catch((err) => { 
+        console.log(err);
+      });
       setStatus("Tricount added successfully!");
       navigate("/");
     } catch (error) {
@@ -61,6 +65,7 @@ const NewTricount = () => {
           Annuler
         </button>
         <h2 className="font-bold">Nouveau tricount</h2>
+        { status && <span>{status}</span> }
         <button
           className="p-2 bg-transparent cursor-pointer"
           onClick={addTricount}

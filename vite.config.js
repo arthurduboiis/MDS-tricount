@@ -9,7 +9,6 @@ export default defineConfig({
       strategies: 'injectManifest',
       srcDir: 'src',
       filename: 'service-worker.js',
-      global: "window",
       registerType: "autoUpdate",
       injectRegister: "auto",
       workbox: {
@@ -70,6 +69,6 @@ export default defineConfig({
     }),
   ],
   define: {
-    global: {},
+    global: "window",
   },
 });

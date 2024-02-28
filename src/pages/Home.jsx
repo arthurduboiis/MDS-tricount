@@ -7,14 +7,24 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "../utils/db.js";
 
 const Home = () => {
-  const tricounts = useLiveQuery(() => db.tricount.toArray());
+  const [tricounts, setTricounts] = React.useState({});
   const navigate = useNavigate();
 
   const goToNewTricount = () => {
     navigate("/new-tricount");
   };
 
+  React.useEffect(() => {
+    db.allDocs({include_docs: true, descending: true}).then((result) => {
+      setTricounts(result.rows.map((row) => row.doc));
 
+    }).catch((err) => {
+      console.log(err);
+    });
+    
+    
+
+  }, []);
 
   React.useEffect(() => {
     window.navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
@@ -36,7 +46,7 @@ const Home = () => {
     <div className="w-full flex flex-col bg-zinc-900">
       <NavBarComponent />
       <div className="divide-y-2 divide-blue-300">
-        {tricounts?.map((tricount, index) => (
+        { tricounts.length > 0 && tricounts.map((tricount, index) => (
           <TricountListComponent key={index} tricount={tricount} />
         ))}
       </div>

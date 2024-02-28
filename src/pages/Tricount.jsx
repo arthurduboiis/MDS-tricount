@@ -11,16 +11,24 @@ const Tricount = () => {
   const { id } = useParams();
   const [tricount, setTricount] = React.useState({});
   const [expenses, setExpenses] = React.useState([]);
-  const [ effectiveTab, setEffectiveTab ] = React.useState("expenses");
+  const [effectiveTab, setEffectiveTab] = React.useState("expenses");
 
   const handleTabChange = (tab) => {
     setEffectiveTab(tab);
-  }
+  };
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const tricountData = await db.tricount.toArray();
-      setTricount(tricountData?.find((tricount) => tricount.id === parseInt(id)));
+      await db
+        .allDocs({ include_docs: true, descending: true })
+        .then((result) => {
+          result.rows.map((row) => {
+            row.doc._id === id ? setTricount(row.doc) : null;
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
 
     fetchData();
@@ -32,28 +40,34 @@ const Tricount = () => {
     }
   }, [tricount]);
 
-
   return (
     <div className="w-full h-screen flex flex-col justify-between bg-zinc-900">
       <div className="">
-        <NavBarTicountComponent name={tricount.title} users={tricount.participants} />
+        <NavBarTicountComponent
+          name={tricount.title}
+          users={tricount.participants}
+        />
         <ExpenseBalanceTabComponent changeTab={handleTabChange} />
         {effectiveTab === "expenses" && (
-           <div className="divide-y-2 divide-blue-300">
-           {expenses?.map((expense, index) => (
-             <ExpenseListComponent key={index} expense={expense} />
-           ))}
-         </div>
+          <div className="divide-y-2 divide-blue-300">
+            {expenses?.map((expense, index) => (
+              <ExpenseListComponent key={index} expense={expense} />
+            ))}
+          </div>
         )}
         {effectiveTab === "balance" && (
           <div className="flex justify-center items-center h-full">
             <div className="text-white text-2xl">Balance</div>
           </div>
-        )
-
-          }
+        )}
       </div>
-      <TricountTotalFooterComponent tricountId={tricount.id} expenses={expenses} currentUser={(tricount.participants|| [])[0]}/>
+      {tricount && (
+        <TricountTotalFooterComponent
+          tricountId={tricount._id}
+          expenses={expenses}
+          currentUser={(tricount.participants || [])[0]}
+        />
+      )}
     </div>
   );
 };
