@@ -33,6 +33,10 @@ const router = createBrowserRouter([
     element: <Expense />,
   },
   {
+    path: "/:id/expense/:expenseId/edit",
+    element: <NewExpense />,
+  },
+  {
     path: "*",
     element: <PageNotFound />,
   },

@@ -34,7 +34,7 @@ const Expense = () => {
 
   return (
     <div className="w-full h-screen flex flex-col justify-between bg-zinc-900">
-      {expense && <ExpenseCardComponent expense={expense} expense_id={expenseId}/>}
+      {expense && <ExpenseCardComponent expense={expense} expense_id={expenseId} tricount_id={id}/>}
     </div>
   );
 };

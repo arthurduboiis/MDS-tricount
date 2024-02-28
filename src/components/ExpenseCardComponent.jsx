@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router";
 
-const ExpenseCardComponent = ({ expense, expense_id }) => {
+const ExpenseCardComponent = ({ expense, expense_id, tricount_id}) => {
+  const navigate = useNavigate();
   expense = expense.find((item) => item._id === expense_id);
 
   const back = () => {
@@ -9,6 +11,7 @@ const ExpenseCardComponent = ({ expense, expense_id }) => {
 
   const onEdit = () => {
     console.log("Edit expense");
+    navigate(`/${tricount_id}/expense/${expense._id}/edit`, { state: { expense }});
   };
 
   return (

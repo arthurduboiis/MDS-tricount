@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
+import { useLocation } from "react-router-dom";
 import "../assets/newExpense.css";
 import { db } from "../utils/db.js";
 import { ToastContainer, toast } from "react-toastify";
@@ -7,16 +8,21 @@ import { useParams } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
 const NewExpense = () => {
+  const { state } = useLocation();
+  const expense = state?.expense;
+
   const { id } = useParams();
   const [status, setStatus] = React.useState("");
-  const [title, setTitle] = React.useState("");
-  const [amount, setAmount] = React.useState(0);
-  const [paidByUser, setPaidByUser] = React.useState("");
-  const [date, setDate] = React.useState("");
+  const [title, setTitle] = React.useState(expense?.title || "");
+  const [amount, setAmount] = React.useState(expense?.amount || 0);
+  const [paidByUser, setPaidByUser] = React.useState(expense?.paidByUser || "");
+  const [date, setDate] = React.useState(expense?.date || "");
   const [isAllChecked, setIsAllChecked] = React.useState(false);
   const [usersTricount, setUsersTricount] = React.useState([]);
   const [tricount, setTricount] = React.useState({});
-  const [paidForUsers, setPaidForUsers] = React.useState([]);
+  const [paidForUsers, setPaidForUsers] = React.useState(
+    expense?.paidForUsers || []
+  );
 
   const navigate = useNavigate();
 
@@ -46,7 +52,9 @@ const NewExpense = () => {
   React.useEffect(() => {
     setPaidForUsers(
       usersTricount?.map((user, index) => {
-        return { id: index + 1, name: user, isChecked: false };
+        const checkedUser = expense?.paidForUsers.find(userExpense => user === userExpense.name);
+        console.log(checkedUser)
+        return { id: index + 1, name: user, isChecked: checkedUser ? true : false};
       })
     );
   }, [usersTricount]);
@@ -64,6 +72,7 @@ const NewExpense = () => {
         return user;
       })
     );
+    console.log(paidForUsers)
   };
 
   const handleCheckAll = () => {
@@ -88,31 +97,67 @@ const NewExpense = () => {
       return;
     }
 
-    try {
-      const newExpense = {
-        _id: new Date().toISOString(),
-        title: title,
-        amount: amount,
-        date: date,
-        paidByUser: paidByUser,
-        paidForUsers: paidForUsers.filter((user) => user.isChecked),
-      };
-      tricount.expenses.push(newExpense);
+    if (expense) {
+      try {
+        const updatedExpense = {
+          _id: expense._id,
+          title: title,
+          amount: amount,
+          date: date,
+          paidByUser: paidByUser,
+          paidForUsers: paidForUsers.filter((user) => user.isChecked),
+        };
+        console.log(paidForUsers)
 
-      await db
-        .put(tricount)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((err) => {
-          console.log(err);
+        tricount.expenses = tricount.expenses.map((exp) => {
+          if (exp._id === expense._id) {
+            return updatedExpense;
+          }
+          return exp;
         });
 
-      setStatus("Expense added successfully!");
-      console.log(id);
-      navigate(`/tricount/${id}`);
-    } catch (error) {
-      setStatus(`Error adding expense : ${error}`);
+        await db
+          .put(tricount)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
+        setStatus("Expense updated successfully!");
+        console.log(id);
+        navigate(`/tricount/${id}`);
+      } catch (error) {
+        setStatus(`Error updating expense : ${error}`);
+      }
+    } else {
+      try {
+        const newExpense = {
+          _id: new Date().toISOString(),
+          title: title,
+          amount: amount,
+          date: date,
+          paidByUser: paidByUser,
+          paidForUsers: paidForUsers.filter((user) => user.isChecked),
+        };
+        tricount.expenses.push(newExpense);
+
+        await db
+          .put(tricount)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
+        setStatus("Expense added successfully!");
+        console.log(id);
+        navigate(`/tricount/${id}`);
+      } catch (error) {
+        setStatus(`Error adding expense : ${error}`);
+      }
     }
   };
 
@@ -159,6 +204,7 @@ const NewExpense = () => {
         <input
           type="text"
           placeholder="Titre"
+          value={title || ""}
           onChange={(e) => {
             setTitle(e.target.value);
           }}
@@ -167,6 +213,7 @@ const NewExpense = () => {
         <input
           type="number"
           placeholder="Montant"
+          value={amount || ""}
           onChange={(e) => {
             setAmount(e.target.value);
           }}
@@ -180,6 +227,7 @@ const NewExpense = () => {
             type="date"
             id="date"
             placeholder={Date.now()}
+            value={date || ""}
             onChange={(e) => {
               setDate(e.target.value);
             }}
