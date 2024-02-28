@@ -1,17 +1,15 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import './index.css'
-import Home from './pages/Home.jsx'
-import NewTricount from './pages/NewTricount.jsx'
-import Tricount from './pages/Tricount.jsx'
-import NewExpense from './pages/NewExpense.jsx'
-import PageNotFound from './pages/PageNotFound.jsx'
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import Home from "./pages/Home.jsx";
+import NewTricount from "./pages/NewTricount.jsx";
+import Tricount from "./pages/Tricount.jsx";
+import Expense from "./pages/Expense.jsx";
+import NewExpense from "./pages/NewExpense.jsx";
+import PageNotFound from "./pages/PageNotFound.jsx";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { ErrorBoundary } from './ErrorBoundary.jsx'
+import { ErrorBoundary } from "./ErrorBoundary.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,14 +29,17 @@ const router = createBrowserRouter([
     element: <NewExpense />,
   },
   {
+    path: "/:id/expense/:expenseId",
+    element: <Expense />,
+  },
+  {
     path: "*",
     element: <PageNotFound />,
   },
-  
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <ErrorBoundary>
     <RouterProvider router={router} />
-  </ErrorBoundary>,
-)
+  </ErrorBoundary>
+);
