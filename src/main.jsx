@@ -8,8 +8,14 @@ import Expense from "./pages/Expense.jsx";
 import NewExpense from "./pages/NewExpense.jsx";
 import PageNotFound from "./pages/PageNotFound.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+//import { syncOnLoad, syncOnLeave, syncOnOffline, syncOnOnline } from "./utils/network.js";
 
 import { ErrorBoundary } from "./ErrorBoundary.jsx";
+
+// syncOnLoad();
+// syncOnLeave();
+// syncOnOffline();
+// syncOnOnline();
 
 const router = createBrowserRouter([
   {

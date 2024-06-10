@@ -1,8 +1,6 @@
 import { precacheAndRoute, cleanupOutdatedCaches } from "workbox-precaching";
 
 
-
-
 import "./pusher";
 
 cleanupOutdatedCaches();

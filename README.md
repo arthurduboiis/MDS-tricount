@@ -1,5 +1,5 @@
 # React + Vite
-
+pouchdb-server --port 5984 --host 0.0.0.0
 https://mds-tricount.vercel.app/
 
 Lien du mini serveur pour envoyer des notifications

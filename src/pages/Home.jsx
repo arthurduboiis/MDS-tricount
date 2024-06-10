@@ -26,17 +26,16 @@ const Home = () => {
 
   React.useEffect(() => {
     fetchtricounts();
-  }, []);
+  }, [remoteCouch]);
+
+  // React.useEffect(() => {
+  //   if (remoteCouch) {
+  //     sync();
+  //     fetchtricounts();
+  //   }
+  // }, []);
 
   React.useEffect(() => {
-    if (remoteCouch) {
-      sync();
-      fetchtricounts();
-    }
-  }, []);
-
-  React.useEffect(() => {
-    console.log("register")
     window.navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
       const beamsClient = new PusherPushNotifications.Client({
         instanceId: "8dc0f2ef-508d-41cb-8402-e4758cdbe4a6",
@@ -51,7 +50,14 @@ const Home = () => {
         .then(() => beamsClient.getDeviceInterests())
         .then((interests) => console.log("Current interests:", interests))
         .catch(console.error);
+
+        if (remoteCouch) {
+         
+          fetchtricounts();
+        }
     });
+
+
   }, []);
 
   return (
